@@ -8,13 +8,17 @@ const postsRoute = require('./routes/posts');
 
 dotenv.config();
 
+const timestamp = () => {
+  return new Date().toJSON()+' ';
+}
+
 // Database Connection
 const connectOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }
 mongoose.connect( process.env.DB_CONNECT, connectOptions, () =>
-  console.log('Connected to DB')
+  console.log(timestamp()+'Connected to DB')
 );
 
 // Middleware
@@ -23,4 +27,4 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use('/api/posts', postsRoute);
 
-app.listen(3000, () => console.log('Listening to port 3000'));
+app.listen(3000, () => console.log(timestamp()+'Listening to port 3000'));
