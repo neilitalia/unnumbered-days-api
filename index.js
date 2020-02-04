@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 // Routes
@@ -22,9 +23,10 @@ mongoose.connect( process.env.DB_CONNECT, connectOptions, () =>
 );
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 // Routes Middleware
 app.use('/api/user', authRoute);
 app.use('/api/posts', postsRoute);
 
-app.listen(3000, () => console.log(timestamp()+'Listening to port 3000'));
+app.listen(process.env.API_PORT, () => console.log(timestamp() + 'Server Up'));
