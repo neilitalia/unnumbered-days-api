@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 // Routes
 const authRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
+const healthcheckRoute = require('./routes/healthcheck');
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ mongoose.connect( process.env.DB_CONNECT, connectOptions, () =>
 app.use(cors());
 app.use(express.json());
 // Routes Middleware
+app.use('/api', healthcheckRoute);
 app.use('/api/user', authRoute);
 app.use('/api/posts', postsRoute);
 
