@@ -4,7 +4,7 @@
   "description": "API for unnumbered-days",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "Neil Italia",
   "license": "ISC",
