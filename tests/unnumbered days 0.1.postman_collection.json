@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "82063104-ce82-474f-bb79-bfe470240718",
+		"name": "unnumbered days 0.1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c481ca0-fbf4-42df-9bcc-749ed4a4aebd",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(\"OK\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{API_URI}}:{{API_PORT}}/api",
+					"protocol": "http",
+					"host": [
+						"{{API_URI}}"
+					],
+					"port": "{{API_PORT}}",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17a37d85-c68f-4b22-a15d-4f29bdee7087",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var validName = pm.environment.get(\"validName\");",
+							"    var validEmail = pm.environment.get(\"validEmail\");",
+							"    pm.expect(jsonData.user).to.not.be.empty;",
+							"    pm.expect(jsonData.name).to.eql(validName);",
+							"    pm.expect(jsonData.email).to.eql(validEmail);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{validName}}\",\n\t\"email\": \"{{validEmail}}\",\n\t\"password\": \"{{validPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{API_URI}}:{{API_PORT}}/api/user/register",
+					"protocol": "http",
+					"host": [
+						"{{API_URI}}"
+					],
+					"port": "{{API_PORT}}",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b3b43d9-8780-44f0-b33c-8dd293d3ed28",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body contains JWT\", function () {",
+							"    pm.expect(pm.response).to.not.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"{{validEmail}}\",\n\t\"password\": \"{{validPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{API_URI}}:{{API_PORT}}/api/user/login",
+					"protocol": "http",
+					"host": [
+						"{{API_URI}}"
+					],
+					"port": "{{API_PORT}}",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Private Route",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTM4OWFiYzBhMDFjMzVlNDQyZWE5YTUiLCJpYXQiOjE1ODA3NzI5Mzd9.ZroyFn_fdexIjJ4ocX6DfkVj49GeBrPA3slCF4IZ3NQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{API_URI}}:{{API_PORT}}/api/posts",
+					"protocol": "http",
+					"host": [
+						"{{API_URI}}"
+					],
+					"port": "{{API_PORT}}",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
